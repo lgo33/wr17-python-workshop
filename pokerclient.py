@@ -1,21 +1,8 @@
 import requests
 from argparse import ArgumentParser
 import time
-import configparser
+from config import Config
 from ranking import *
-
-
-class Config(configparser.RawConfigParser):
-    def __init__(self, filename):
-        self.filename = filename
-        super().__init__()
-        self.optionxform = str
-        self.read(self.filename)
-
-    def save(self):
-        with open(self.filename, 'w') as cfgfile:
-            self.write(cfgfile)
-
 
 class Player(object):
     def __init__(self, **kwargs):
@@ -92,11 +79,11 @@ class Player(object):
 if __name__ == '__main__':
     argparser = ArgumentParser(description='register Poker client')
     argparser.add_argument('-u', '--UUID', type=str, help='username')
-    argparser.add_argument('-j', '--join', type=str, help='join <tablename>')
-    argparser.add_argument('-s', '--status', type=str, help='status <tablename>')
-    argparser.add_argument('-p', '--playername', type=str, help='playername <name>')
-    argparser.add_argument('-t', '--tablename', type=str, help='tablename <tablename>')
-    argparser.add_argument('-c', '--configfile', type=str, help='configfile <filename>', default='.config')
+    argparser.add_argument('-s', '--status', type=str, help='get current information of a table')
+    argparser.add_argument('-p', '--playername', type=str, help='set the player name, if UUID is not found in config, the player will be registered first')
+    argparser.add_argument('-t', '--tablename', type=str, help='name of the table to join')
+    argparser.add_argument('-b', '--base_url', type=str, help='set the address of the poker server')
+    argparser.add_argument('-c', '--configfile', type=str, default='.config')
 
     params = vars(argparser.parse_args())
     player = Player(**params)
