@@ -16,6 +16,16 @@ def parse_cards(cards):
     return sorted([(int(rank.get(c[0], (c[0]))), c[-1]) for c in cards], key=lambda x: -x[0])
 
 
+def create_card(rank, suit):
+    int2rank = {
+        11: 'J',
+        12: 'Q',
+        13: 'K',
+        14: 'A'
+    }
+    return int2rank.get(rank, str(rank)) + suit
+
+
 def parse_and_count_cards(cards):
     pc = parse_cards(cards)
     count = OrderedDict()

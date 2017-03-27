@@ -1,7 +1,8 @@
 import configparser
 import json
 
-class Config(configparser.RawConfigParser):
+
+class JSONConfig(configparser.RawConfigParser):
     def __init__(self, filename):
         self.filename = filename
         super().__init__()
@@ -17,3 +18,6 @@ class Config(configparser.RawConfigParser):
             return json.loads(super().get(*args, **kwargs))
         except json.JSONDecodeError:
             return super().get(*args, **kwargs)
+
+    def set(self, section, value, *args, **kwargs):
+        return super().set(section, json.dumps(value), *args, **kwargs)

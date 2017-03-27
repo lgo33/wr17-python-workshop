@@ -1,7 +1,7 @@
 import requests
 from argparse import ArgumentParser
 import time
-from config import Config
+from jsonconfig import JSONConfig
 from ranking import *
 
 class Player(object):
@@ -13,7 +13,7 @@ class Player(object):
             if v is not None:
                 self.__dict__[k] = v
                 print('setting', k, v)
-        self.config = Config(self.configfile)
+        self.config = JSONConfig(self.configfile)
         for player in self.config.items('players'):
             if player[0] == self.playername:
                 self.UUID = player[1]
